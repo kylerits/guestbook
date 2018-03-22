@@ -20,7 +20,7 @@ class Signature extends Model
       * @param $query
       * @return mixed
       */
-      public function scopeIgnoreFlaged($query)
+      public function scopeIgnoreFlagged($query)
       {
           return $query->where('flagged_at', null);
       }
@@ -33,5 +33,15 @@ class Signature extends Model
       public function flag()
       {
           return $this->update(['flagged_at' => \Carbon\Carbon::now()]);
+      }
+
+      /**
+       * Get the user Gravatar by their email address.
+       * 
+       * @return string
+       */
+      public function getAvatarAttribure()
+      {
+          return sprintf('https://www.gravatar.com/avatar/%s?s=100', md5($this->email));
       }
 }
